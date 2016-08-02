@@ -14,21 +14,14 @@ import java.util.*;
 public class Test1 {
 
 	public static void main(String[] args) {
-		method();
-	}
-
-	public static void method() {
-		try (Scanner sc = new Scanner(System.in)) {
-			while (sc.hasNextInt()) {
-				int n = sc.nextInt();
-				String[] a = new String[n];
-				for (int i = 0; i < n; i++)
-					a[i] = sc.next();
-				String re = method(a);
-				System.out.println(re);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNextInt()) {
+			int n = sc.nextInt();
+			String[] a = new String[n];
+			for (int i = 0; i < n; i++)
+				a[i] = sc.next();
+			String re = method(a);
+			System.out.println(re);
 		}
 	}
 
