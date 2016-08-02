@@ -4,50 +4,49 @@ import java.util.*;
 
 public class Test3{
 	public static void main(String[] args){
-        method();
+        Scanner sc = new Scanner(System.in);
+        while(sc.hasNext()){
+        	int n = sc.nextInt();
+        	Task[] a = new Task[n];
+        	for(int i=0;i<n;i++){
+        		Task t = new Task(sc.nextInt(),sc.nextInt());
+        		a[i] = t;
+        	}
+        	method(a);
+        }
     }    
-    public static void method(){
-        try(Scanner sc = new Scanner(System.in)){
-            while(sc.hasNextLine()){
-                int len = sc.nextInt();
-                ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
-                ArrayList<Integer> list1 = new ArrayList<Integer>();
-                int index = 0;
-                while(index < len){
-                    list1.add(sc.nextInt());
-                    list1.add(sc.nextInt());
-                    list.add(list1);
-                    index++;
-                }
-                System.out.println(sjf(list));
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    
-    public static String sjf(ArrayList<ArrayList<Integer>> list){
-        Collections.sort(list,new Comparator<ArrayList<Integer>>(){
-           public int compare(ArrayList<Integer> a,ArrayList<Integer> b){
-               if(a.get(1)>b.get(1))
-                   return 1;
-               else if(a.get(1)<b.get(1))
-                   return -1;
-               else{
-                   return a.get(0)-b.get(0);
-               }
-           } 
-        });
-        int sum = 0;
-        int delay = 0;
-        for(int i=0;i<list.size();i++){
-            
-            int temp = Math.max(sum-list.get(i).get(0),0);
-            delay += temp;    
-            sum += list.get(i).get(1);
-        }
-        java.text.DecimalFormat df=new java.text.DecimalFormat("#.####");   
-        return df.format(delay/list.size());
-    }
+	public static void method(Task[] a){
+		//按照优先级排序，
+		Arrays.sort(a,new Comparator<Task>(){
+			public int compare(Task t1,Task t2){
+				if(t1.come > t2.come)
+					return 1;
+				else if(t1.come < t2.come)
+					return -1;
+				else{
+					if(t1.need > t2.need)
+						return 1;
+					else
+						return -1;
+				}
+			}
+		});
+		int cur = 0;
+		int all = 0;
+		for(int i=1;i<a.length;i++){
+			cur = cur + (a[i-1].need + a[i-1].come - a[i].come);
+			all += cur;
+		}
+		double re = all/(double)a.length;
+		String s = String.format("%.4f", re);
+		System.out.println(s);
+	}
+}
+class Task{
+	int come;
+	int need;
+	public Task(int come,int need){
+		this.come = come;
+		this.need = need;
+	}
 }

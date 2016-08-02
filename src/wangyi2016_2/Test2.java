@@ -1,4 +1,4 @@
-package wangyi2016yanfa;
+package wangyi2016_2;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -40,6 +40,7 @@ public class Test2 {
 		}
 		int i = a[0] > l-a[a.length-1] ? a[0] : l-a[a.length-1];
 		//注意处理int计算结果为double时，可以采用如下方法
+		//两个int相除，还是int，若要得到小数，可以将除数转为double
 		double m = max/2.0;
 		return m > i ? m : i;
 	}
