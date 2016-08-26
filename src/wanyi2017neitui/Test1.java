@@ -20,42 +20,20 @@ public class Test1 {
 				a[i] = sc.nextInt();
 			int k = sc.nextInt();
 			int d = sc.nextInt();
-			int max = 0;
-			for (int i = 0; i < n; i++) {
-				if(a.length - i < k)
-					break;
-				max = Math.max(max, method(a, i, k, d, true));
-			}
+			int max = method(a,n,k,d);
 			System.out.println(max);
 		}
 	}
-
-	// 以start为起点的最大值或最小值  flag为true表示求最大值
-	public static int method(int[] a, int start, int k, int d, boolean flag) {
-		if (k == 1)
-			return a[start];
-
-		//取后面的最大值
-		int m = 0;
-		if(a[start] > 0 && flag || a[start] < 0 && !flag){
-			m = Integer.MIN_VALUE;
-			for(int i=start;i<=start+d;i++){
-				if(a.length - i < k)
+	public static int method(int[] a,int n,int k,int d){
+		//表示以a[n-1]为结尾的满足条件的k个数的最大乘积
+		int[][] dp = new int[n][k];
+		dp[0][0] = a[0];
+		for(int i=0;i<n;i++){
+			for(int j=0;j<k;j++){
+				if(j > i)
 					break;
-				int cur = method(a,i+1,k-1,d,true);
-				m = Math.max(cur, m);
+				if(a[i] > 0)
 			}
 		}
-		//取后面的最小值
-		else{
-			m = Integer.MAX_VALUE;
-			for(int i=start;i<=start+d;i++){
-				if(a.length - i < k)
-					break;
-				int cur = method(a, i+1, k-1, d, false);
-				m = Math.min(cur, m);
-			}
-		}
-		return a[start]*m;
 	}
 }
